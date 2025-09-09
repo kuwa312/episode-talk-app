@@ -33,7 +33,7 @@ const CreatePost = ({ isAuth }) => {
   return (
     <div className="createPostPage">
       <div className="postContainer">
-        <h1>エピソードを追加する</h1>
+        <h1>エピソードトークを追加する</h1>
         <div className="inputPost">
           <div>タイトル</div>
           <input

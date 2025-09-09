@@ -90,7 +90,7 @@ const Edit = () => {
 
   return (
     <div className="editPage">
-      <h2>投稿編集</h2>
+      <h2>エピソードトークを編集</h2>
 
       <div>タイトル</div>
       <input

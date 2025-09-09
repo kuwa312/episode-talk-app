@@ -58,7 +58,7 @@ const SearchEpisode = () => {
 
   return (
     <div className="searchEpisode">
-      <h2>エピソード検索</h2>
+      <h2>エピソードトーク検索</h2>
 
       <div>まだ話していない友達（複数選択可）</div>
       <div className="friendsCheckboxes">
@@ -81,7 +81,7 @@ const SearchEpisode = () => {
       <h3>検索結果</h3>
       <div className="results">
         {filteredPosts.length === 0 ? (
-          <p>該当するエピソードはありません。</p>
+          <p>該当するエピソードトークはありません。</p>
         ) : (
           filteredPosts.map((post) => (
             <div key={post.id} className="postCard">
