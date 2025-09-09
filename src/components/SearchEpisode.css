@@ -1,0 +1,138 @@
+/* SearchEpisode.css */
+
+.searchEpisode {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.searchEpisode h2 {
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+.friendsCheckboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 8px 0;
+}
+
+.friendOption {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #f0f0f0;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.friendOption:hover {
+  background-color: #e0e0e0;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.buttonGroup button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background-color: #3498db;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.buttonGroup button:hover {
+  background-color: #2980b9;
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.postCard {
+  padding: 14px 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.postCard h4 {
+  margin-bottom: 6px;
+  font-size: 1.2rem;
+}
+
+.postCard p {
+  margin: 4px 0;
+  font-size: 1rem;
+}
+
+.talkedTo {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* レスポンシブ対応 */
+
+/* スマホ */
+@media (max-width: 600px) {
+  .searchEpisode {
+    padding: 12px;
+  }
+
+  .friendOption {
+    font-size: 0.9rem;
+    padding: 4px 8px;
+  }
+
+  .postCard h4 {
+    font-size: 1rem;
+  }
+
+  .postCard p {
+    font-size: 0.95rem;
+  }
+
+  .buttonGroup button {
+    padding: 6px 10px;
+    font-size: 0.9rem;
+  }
+}
+
+/* タブレット */
+@media (min-width: 601px) and (max-width: 900px) {
+  .searchEpisode {
+    padding: 14px;
+  }
+
+  .postCard h4 {
+    font-size: 1.1rem;
+  }
+
+  .postCard p {
+    font-size: 0.98rem;
+  }
+}
+
+/* 大画面 */
+@media (min-width: 1200px) {
+  .searchEpisode {
+    max-width: 900px;
+    padding: 20px;
+  }
+}
