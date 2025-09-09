@@ -82,12 +82,12 @@ const Home = () => {
   // }, []);
 
   return (
-    <div className="homePage">
+    <div className="page">
       {postList.map((post) => {
         const avgRating = getAverageRating(post.talkedTo);
 
         return (
-          <div className="postContents" key={post.id}>
+          <div className="card" key={post.id}>
             <div className="postHeader">
               <h1>{post.title}</h1>
             </div>

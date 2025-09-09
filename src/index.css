@@ -23,6 +23,11 @@ body {
     @apply bg-blue-600 transition-colors;
 }
 
+
+.page {
+  @apply flex flex-col gap-5 p-4 mx-auto sm:p-7 lg:max-w-[1200px];
+}
+
 .card {
-    @apply bg-white shadow-md rounded-2xl p-8 w-full max-w-sm text-center
+  @apply w-full bg-white rounded-xl shadow-md flex flex-col gap-3 p-4 lg:p-5;
 }
