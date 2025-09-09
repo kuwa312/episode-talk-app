@@ -1,58 +1,3 @@
-/* .createPostPage {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 90vh;
-}
-
-.postContainer {
-    background-color: #fff;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 400px;
-    width: 500px;
-    gap: 10px;
-    padding: 0 40px;
-    box-shadow: 0px 0px 15px 1px #777777;
-}
-
-.postContainer h1 {
-    margin: 0;
-}
-
-.postContainer input {
-    width: 100%;
-    height: 30px;
-    outline: none;
-    padding: 0px 4px;
-}
-
-.postContainer textarea {
-    width: 100%;
-    height: 120px;
-    outline: none;
-    padding: 7px;
-}
-
-.postButton {
-    padding: 10px 0;
-    background-color: #3d77a5;
-    border: none;
-    box-shadow: 0px 0px 15px 1px #777777;
-    color: #fff;
-    border-right: 5px;
-    cursor: pointer;
-    transition:  all 0.3s;
-}
-
-.postButton:hover {
-    transform: translateY(5px);
-    box-shadow: none;
-} */
-
-/* CreatePost.css */
 
 .createPostPage {
   display: flex;
@@ -107,7 +52,7 @@
   color: #fff;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.3s;
 }
 
 .postButton:hover {
