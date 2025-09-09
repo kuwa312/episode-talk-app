@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+
+    margin: 0;
+    background-color: rgb(198, 237, 224);
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn {
+    @apply font-bold py-2 px-4 rounded;
+}
+
+.btn-blue {
+    @apply btn bg-blue-500 text-white;
+}
+
+.btn-blue:hover {
+    @apply bg-blue-600;
+}
