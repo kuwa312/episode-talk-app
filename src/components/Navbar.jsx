@@ -25,7 +25,7 @@ const Navbar = ({ isAuth }) => {
       </Link>
       {!isAuth ? (
         <Link to={"/login"}>
-          <FontAwesomeIcon icon={faRightToBracket} />
+          <FontAwesomeIcon icon={faArrowRightToBracket} />
           ログイン
         </Link>
       ) : (
@@ -51,7 +51,7 @@ const Navbar = ({ isAuth }) => {
             ともだち
           </Link>
           <Link to={"/logout"}>
-            <FontAwesomeIcon icon={faRightFromBracket} />
+            <FontAwesomeIcon icon={faArrowRightToBracket} />
             <span>ログアウト</span>
           </Link>
         </>
