@@ -31,13 +31,20 @@ body {
     @apply bg-red-600 transition-colors;
 }
 
-
-
-
 .page {
-  @apply flex flex-col gap-5 p-4 mx-auto sm:p-7 lg:max-w-[1200px];
+  @apply flex flex-col gap-5 p-4 mx-auto sm:p-7 lg:max-w-[950px];
 }
 
 .card {
   @apply w-full bg-white rounded-xl shadow-md flex flex-col gap-3 p-4 lg:p-5;
+}
+
+
+input,
+textarea {
+  @apply px-3 py-2 rounded-md border border-gray-300 text-base w-full box-border resize-y;
+}
+
+textarea {
+  @apply min-h-[120px];
 }

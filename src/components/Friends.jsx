@@ -7,7 +7,7 @@ import {
     doc,
 } from "firebase/firestore";
 import { db } from "../firebase";
-import "./Friends.css";
+
 
 const Friends = ({ isAuth }) => {
     const [friendsList, setFriendsList] = useState([]);
@@ -56,23 +56,30 @@ const Friends = ({ isAuth }) => {
 
     return (
         <div>
-            <div className="friendContainer">
+            <div className="page  lg:max-w-[700px]">
                 <h2 className="text-center text-2xl">ともだち一覧</h2>
-                <div className="addFriendContainer" >
+                <div className="flex gap-2" >
                     <input
+                        className="flex-1"
                         type="text"
                         value={username}
                         placeholder="追加するともだち"
                         onChange={(e) => setUsername(e.target.value)}
                     />
-                    <button onClick={addFriend}>追加</button>
+                    <button className="btn-blue" onClick={addFriend}>追加</button>
                 </div>
 
-                <ul>
+                <ul className="flex flex-col gap-2">
                     {friendsList.map((friend) => (
-                        <li key={friend.id}>
+                        <li
+                            class="flex justify-between items-center
+         px-2.5 py-1.5 text-sm
+         sm:px-3 sm:py-2 sm:text-sm
+         md:text-base
+         border border-gray-300 rounded-lg bg-gray-50"
+                        >
                             {friend.username ? friend.username : "No Name"}
-                            <button onClick={() => deleteFriend(friend.id)}>削除</button>
+                            <button className="btn-red" onClick={() => deleteFriend(friend.id)}>削除</button>
                         </li>
                     ))}
                 </ul>
