@@ -72,7 +72,7 @@ const Home = () => {
   };
 
   if (postList.length === 0) {
-    return <div className="noEpisode">エピソードが存在しません</div>;
+    return <div className="text-center mt-10 text-lg text-gray-500">エピソードが存在しません</div>;
   }
 
   // useEffect(() => {
@@ -88,27 +88,27 @@ const Home = () => {
 
         return (
           <div className="card" key={post.id}>
-            <div className="postHeader">
-              <h1>{post.title}</h1>
+            <div>
+              <h1 className="text-base sm:text-lg md:text-xl break-words">{post.title}</h1>
             </div>
 
-            <div className="postTextContainer">{post.postsText}</div>
+            <div className="text-base leading-relaxed whitespace-pre-wrap break-words max-sm:text-sm">{post.postsText}</div>
 
             {/* 話した友達と平均評価を表示 */}
             {post.talkedTo && post.talkedTo.length > 0 && (
-              <div className="talkedTo">
+              <div className="text-sm text-gray-600">
                 <strong>話した友達:</strong> {getFriendNames(post.talkedTo)}
                 {avgRating && (
-                  <span className="avgRating">（おもしろさ: {avgRating}）</span>
+                  <span className="ml-2 font-bold text-orange-400">（おもしろさ: {avgRating}）</span>
                 )}
               </div>
             )}
 
-            <div className="buttons">
+            <div className="flex gap-2.5 mt-2 max-sm:gap-1.5">
               {post.author.id === auth.currentUser?.uid && (
                 <>
-                  <button onClick={() => handleEdit(post)}>編集</button>
-                  <button onClick={() => handleDelete(post.id)}>削除</button>
+                  <button className="btn-blue" onClick={() => handleEdit(post)}>編集</button>
+                  <button className="btn-red" onClick={() => handleDelete(post.id)}>削除</button>
                 </>
               )}
             </div>

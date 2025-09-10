@@ -57,12 +57,12 @@ const Friends = ({ isAuth }) => {
     return (
         <div>
             <div className="friendContainer">
-                <h2>ともだち一覧</h2>
+                <h2 className="text-center text-2xl">ともだち一覧</h2>
                 <div className="addFriendContainer" >
                     <input
                         type="text"
                         value={username}
-                        placeholder="ともだちの名前"
+                        placeholder="追加するともだち"
                         onChange={(e) => setUsername(e.target.value)}
                     />
                     <button onClick={addFriend}>追加</button>

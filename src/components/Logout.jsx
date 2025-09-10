@@ -17,7 +17,7 @@ const Logout = ({ setIsAuth }) => {
   return (
     <div className="page">
       <div className="card">
-        <p className="text-lg mb-4">ログアウトする</p>
+        <p className="text-lg mb-4 text-center">ログアウトする</p>
         <button
           onClick={logout}
           className="btn-blue"
