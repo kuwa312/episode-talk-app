@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
-import "./SearchEpisode.css";
 
 const SearchEpisode = () => {
   const [friendsList, setFriendsList] = useState([]);
@@ -9,24 +8,17 @@ const SearchEpisode = () => {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
 
-  // 初期データ取得
   useEffect(() => {
     const fetchData = async () => {
-      // friends
       const friendsSnap = await getDocs(collection(db, "friends"));
-      setFriendsList(
-        friendsSnap.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-      );
+      setFriendsList(friendsSnap.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
 
-      // posts
       const postsSnap = await getDocs(collection(db, "posts"));
       setPosts(postsSnap.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
-
     fetchData();
   }, []);
 
-  // フィルタ処理
   const handleSearch = () => {
     if (selectedFriends.length === 0) {
       setFilteredPosts(posts);
@@ -38,16 +30,12 @@ const SearchEpisode = () => {
       const talkedIds = talkedTo.map((t) =>
         typeof t === "string" ? t : t.friendId
       );
-
-      // 選んだ友達すべてが talkedTo に含まれていない
       return selectedFriends.every((friendId) => !talkedIds.includes(friendId));
     });
 
     setFilteredPosts(result);
   };
 
-
-  // 友達のチェック切り替え
   const handleFriendChange = (friendId) => {
     setSelectedFriends((prev) =>
       prev.includes(friendId)
@@ -57,13 +45,16 @@ const SearchEpisode = () => {
   };
 
   return (
-    <div className="searchEpisode">
-      <h2>エピソードトーク検索</h2>
+    <div className="page p-4">
+      <h1 className="text-center text-2xl mb-4">エピソードトーク検索</h1>
 
-      <div>まだ話していない友達（複数選択可）</div>
-      <div className="friendsCheckboxes">
+      <div className="mb-2">まだ話していない友達（複数選択可）</div>
+      <div className="flex flex-wrap gap-3 mb-4">
         {friendsList.map((friend) => (
-          <label key={friend.id} className="friendOption">
+          <label
+            key={friend.id}
+            className="flex items-center gap-2 bg-gray-100 px-3 py-1.5 rounded-md text-base cursor-pointer hover:bg-gray-200 transition"
+          >
             <input
               type="checkbox"
               checked={selectedFriends.includes(friend.id)}
@@ -74,38 +65,36 @@ const SearchEpisode = () => {
         ))}
       </div>
 
-      <div className="buttonGroup">
-        <button onClick={handleSearch}>検索</button>
+      <div className="buttonGroup flex gap-3 mb-4">
+        <button className="btn-blue" onClick={handleSearch}>
+          検索
+        </button>
       </div>
 
-      <h3>検索結果</h3>
-      <div className="results">
+      <h3 className="text-lg font-semibold mb-2">検索結果</h3>
+      <div className="flex flex-col gap-4">
         {filteredPosts.length === 0 ? (
           <p>該当するエピソードトークはありません。</p>
         ) : (
           filteredPosts.map((post) => (
-            <div key={post.id} className="postCard">
-              <h4>{post.title}</h4>
-              <p>{post.postsText}</p>
-              <p className="talkedTo">
+            <div
+              key={post.id}
+              className="p-4 border border-gray-300 rounded-lg bg-white shadow-sm"
+            >
+              <h4 className="mb-1 text-lg sm:text-base md:text-lg">{post.title}</h4>
+              <p className="mb-1 text-base sm:text-sm md:text-base">{post.postsText}</p>
+              <p className="text-sm text-gray-600">
                 話した友達:{" "}
                 {(post.talkedTo || [])
                   .map((item) => {
                     if (typeof item === "string") {
-                      // 旧仕様: 文字列ID
-                      return (
-                        friendsList.find((f) => f.id === item)?.username || ""
-                      );
+                      return friendsList.find((f) => f.id === item)?.username || "";
                     } else if (item.friendId) {
-                      // 新仕様: { friendId, rating }
-                      return (
-                        friendsList.find((f) => f.id === item.friendId)
-                          ?.username || ""
-                      );
+                      return friendsList.find((f) => f.id === item.friendId)?.username || "";
                     }
                     return "";
                   })
-                  .filter((name) => name) // 空文字を除去
+                  .filter((name) => name)
                   .join(", ")}
               </p>
             </div>

@@ -40,11 +40,19 @@ body {
 }
 
 
-input,
-textarea {
+.input,
+.textarea {
   @apply px-3 py-2 rounded-md border border-gray-300 text-base w-full box-border resize-y;
 }
 
-textarea {
+.textarea {
   @apply min-h-[120px];
+}
+
+.link {
+  @apply no-underline text-white transition duration-300 hover:text-[cadetblue] flex items-center;
+}
+
+.link svg {
+  @apply ml-[5px];
 }

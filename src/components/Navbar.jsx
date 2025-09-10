@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouse,
@@ -15,44 +14,47 @@ import {
 
 const Navbar = ({ isAuth }) => {
   return (
-    <nav>
-      <Link to={"/"}>
-        <span>
+    <nav className="  flex justify-center items-center 
+  h-12 gap-11 bg-orange-400
+  sm:h-12 sm:gap-11
+  xs:h-[48px] xs:gap-[30px]">
+      <Link className="link" to={"/"}>
+        <span className="hidden sm:inline">
           <FontAwesomeIcon icon={faHouse} />
           エピソード
         </span>
         一覧
       </Link>
       {!isAuth ? (
-        <Link to={"/login"}>
+        <Link className="link" to={"/login"}>
           <FontAwesomeIcon icon={faArrowRightToBracket} />
           ログイン
         </Link>
       ) : (
         <>
-          <Link to={"/search"}>
-            <span>
+          <Link className="link" to={"/search"}>
+            <span className="hidden sm:inline">
               <FontAwesomeIcon icon={faMagnifyingGlass} />
               エピソード
             </span>
             検索
           </Link>
-          <Link to={"/createpost"}>
-            <span>
+          <Link className="link" to={"/createpost"}>
+            <span className="hidden sm:inline">
               <FontAwesomeIcon icon={faPenToSquare} />
               エピソード
             </span>
             追加
           </Link>
-          <Link to={"/friends"}>
-            <span>
+          <Link className="link" to={"/friends"}>
+            <span className="hidden sm:inline">
               <FontAwesomeIcon icon={faUsers} />
             </span>
             ともだち
           </Link>
-          <Link to={"/logout"}>
+          <Link className="link" to={"/logout"}>
             <FontAwesomeIcon icon={faArrowRightToBracket} />
-            <span>ログアウト</span>
+            <span className="hidden sm:inline">ログアウト</span>
           </Link>
         </>
       )}

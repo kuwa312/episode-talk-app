@@ -60,7 +60,7 @@ const Friends = ({ isAuth }) => {
                 <h2 className="text-center text-2xl">ともだち一覧</h2>
                 <div className="flex gap-2" >
                     <input
-                        className="flex-1"
+                        className="input flex-1"
                         type="text"
                         value={username}
                         placeholder="追加するともだち"
