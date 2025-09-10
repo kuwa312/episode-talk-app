@@ -36,7 +36,7 @@ const CreatePost = ({ isAuth }) => {
       <div className="card">
         <div className="flex flex-col gap-2">
           <div>タイトル</div>
-          <input className="p-2"
+          <input className="input p-2"
             type="text"
             placeholder="タイトルを記入"
             onChange={(e) => setTitle(e.target.value)}
@@ -44,7 +44,7 @@ const CreatePost = ({ isAuth }) => {
         </div>
         <div className="flex flex-col gap-2">
           <div>内容</div>
-          <textarea
+          <textarea className="textarea"
             placeholder="内容を記入"
             onChange={(e) => setPostText(e.target.value)}
           ></textarea>
