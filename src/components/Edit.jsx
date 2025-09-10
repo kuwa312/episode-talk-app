@@ -8,7 +8,6 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { db, auth } from "../firebase";
-import "./Edit.css";
 
 const Edit = () => {
   const { id } = useParams();
@@ -89,64 +88,69 @@ const Edit = () => {
   };
 
   return (
-    <div className="editPage">
-      <h2>エピソードトークを編集</h2>
+    <div className="page">
+      <h1 className="text-center text-2xl">エピソードトークを編集</h1>
+      <div className="card">
+        <div className="flex flex-col gap-2">
+          <div>タイトル</div>
+          <input className="input p-2"
+            type="text"
+            value={title}
+            placeholder="タイトル"
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <div>内容</div>
+          <textarea className="textarea"
+            value={postsText}
+            placeholder="内容"
+            onChange={(e) => setPostsText(e.target.value)}
+          />
+        </div>
 
-      <div>タイトル</div>
-      <input
-        type="text"
-        value={title}
-        placeholder="タイトル"
-        onChange={(e) => setTitle(e.target.value)}
-      />
+        <div>話した友達（複数選択 & 評価）</div>
+        <div className="flex flex-wrap gap-3 mx-0 my-0">
+          {friendsList.map((friend) => {
+            const selected = selectedFriends.find(
+              (f) => f.friendId === friend.id
+            );
+            return (
+              <div key={friend.id} className="flex items-center gap-3 bg-gray-100 friendOption px-1 py-2 md:px-2 md:py-3 rounded-lg shadow-sm translate-colors hover:bg-gray-200 text-sm md:text-base">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={!!selected}
+                    onChange={() => handleFriendChange(friend.id)}
+                  />
+                  {friend.username}
+                </label>
+                {selected && (
+                  <select className="px-2 py-1 rounded-md border border-gray-300 text-sm md:text-base bg-white ml-0 md:ml-1"
+                    value={selected.rating}
+                    onChange={(e) =>
+                      handleRatingChange(friend.id, e.target.value)
+                    }
+                  >
+                    {[1, 2, 3, 4, 5].map((num) => (
+                      <option key={num} value={num}>
+                        {num}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              </div>
+            );
+          })}
+        </div>
 
-      <div>内容</div>
-      <textarea
-        value={postsText}
-        placeholder="本文"
-        onChange={(e) => setPostsText(e.target.value)}
-      />
-
-      <div>話した友達（複数選択 & 評価）</div>
-      <div className="friendsCheckboxes">
-        {friendsList.map((friend) => {
-          const selected = selectedFriends.find(
-            (f) => f.friendId === friend.id
-          );
-          return (
-            <div key={friend.id} className="friendOption">
-              <label>
-                <input
-                  type="checkbox"
-                  checked={!!selected}
-                  onChange={() => handleFriendChange(friend.id)}
-                />
-                {friend.username}
-              </label>
-              {selected && (
-                <select
-                  value={selected.rating}
-                  onChange={(e) =>
-                    handleRatingChange(friend.id, e.target.value)
-                  }
-                >
-                  {[1, 2, 3, 4, 5].map((num) => (
-                    <option key={num} value={num}>
-                      {num}
-                    </option>
-                  ))}
-                </select>
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="buttonGroup">
-        <button onClick={handleUpdate}>更新</button>
-        <button onClick={() => navigate("/")}>キャンセル</button>
+        <div className="flex gap-3">
+          <button className="btn-blue" onClick={handleUpdate}>更新</button>
+          <button className="btn-red" onClick={() => navigate("/")}>キャンセル</button>
+        </div>
       </div>
     </div>
+
   );
 };
 
