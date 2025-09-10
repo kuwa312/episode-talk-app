@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./Home.css";
 import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { useNavigate } from "react-router-dom";
@@ -83,6 +82,7 @@ const Home = () => {
 
   return (
     <div className="page">
+      <h1 className="text-center text-2xl">エピソードトーク一覧</h1>
       {postList.map((post) => {
         const avgRating = getAverageRating(post.talkedTo);
 
