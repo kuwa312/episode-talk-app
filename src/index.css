@@ -2,14 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-
+/* body {
     margin: 0;
+    height: 100%;
     background-color: rgb(255, 248, 231);
     font-family: 'Poppins', sans-serif;
     @apply font-semibold ;
+    background-image: url('assets/3550599_l.jpg');
+    background-size: 80px auto;
+    background-position: 0 48px; 
+    background-repeat: repeat;
+} */
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh; /* ページ全体 */
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+    background-color: rgb(255, 248, 231);
+    z-index: -2;
 }
 
+body::before {
+  content: "";
+  position: absolute;
+  top: 48px;
+  left: 0;
+  width: 100%;
+  min-height: calc(100% - 48px);
+  background-image: url('assets/3550599_l.jpg');
+  background-size: 85px auto;
+  background-repeat: repeat;
+  opacity: 0.2;
+  z-index: -1;
+}
 .btn {
     @apply font-bold py-2 px-6 rounded-lg shadow-md ;
 }
