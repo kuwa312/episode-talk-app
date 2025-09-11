@@ -18,6 +18,7 @@ html, body {
   padding: 0;
   min-height: 100vh; /* ページ全体 */
   font-family: 'Poppins', sans-serif;
+  font-weight: 600;
   position: relative;
     background-color: rgb(255, 248, 231);
     z-index: -2;
