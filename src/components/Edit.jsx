@@ -22,8 +22,14 @@ const Edit = () => {
 
   // 投稿データと友達データを取得
   useEffect(() => {
+
     const fetchPost = async () => {
-      const postRef = doc(db, "posts", id);
+      if (!auth.currentUser) {
+        navigate("/login");
+        return;
+      }
+
+      const postRef = doc(db, `users/${auth.currentUser.uid}/posts`, id);
       const postSnap = await getDoc(postRef);
 
       if (postSnap.exists()) {
@@ -39,9 +45,11 @@ const Edit = () => {
     };
 
     const fetchFriends = async () => {
-      const data = await getDocs(collection(db, "friends"));
+      if (!auth.currentUser) return;
+      const data = await getDocs(collection(db, `users/${auth.currentUser.uid}/friends`));
       setFriendsList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
+
 
     fetchPost();
     fetchFriends();
@@ -77,7 +85,7 @@ const Edit = () => {
       return;
     }
 
-    const postRef = doc(db, "posts", id);
+    const postRef = doc(db, `users/${auth.currentUser.uid}/posts`, id);
     await updateDoc(postRef, {
       title,
       postsText,

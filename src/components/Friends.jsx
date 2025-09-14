@@ -6,32 +6,49 @@ import {
     deleteDoc,
     doc,
 } from "firebase/firestore";
-import { db } from "../firebase";
+
+import { auth, db } from "../firebase";
+import { useNavigate } from "react-router-dom";
+
+import { onAuthStateChanged } from "firebase/auth";
+
 
 
 const Friends = ({ isAuth }) => {
     const [friendsList, setFriendsList] = useState([]);
     const [username, setUsername] = useState("");
+    const navigate = useNavigate();
 
     // 50音順でソートする関数
     const sortFriends = (list) => {
         return list.sort((a, b) => a.username.localeCompare(b.username, "ja"));
     };
 
-    // 初回レンダリングでデータ取得
+
     useEffect(() => {
-        const getFriends = async () => {
-            const data = await getDocs(collection(db, "friends"));
-            const list = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-            setFriendsList(sortFriends(list));
-        };
-        getFriends();
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const data = await getDocs(
+                    collection(db, `users/${user.uid}/friends`)
+                );
+                const list = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+                setFriendsList(sortFriends(list));
+            } else {
+                setFriendsList([]); // ログアウト時は空
+            }
+        });
+
+        return () => unsubscribe();
     }, []);
+
 
     // 友達追加
     const addFriend = async () => {
-        if (!username) return;
-        const docRef = await addDoc(collection(db, "friends"), { username });
+
+        if (!username || !auth.currentUser) return;
+
+        const docRef = await addDoc(collection(db, `users/${auth.currentUser.uid}/friends`), { username });
+
         const newList = [...friendsList, { username, id: docRef.id }];
         setFriendsList(sortFriends(newList));
         setUsername("");
@@ -39,11 +56,14 @@ const Friends = ({ isAuth }) => {
 
     // 友達削除
     const deleteFriend = async (id) => {
+
+        if (!auth.currentUser) return;
+
         const confirmDelete =
             window.confirm("本当にこの友達を削除していいですか？");
         if (!confirmDelete) return;
 
-        await deleteDoc(doc(db, "friends", id));
+        await deleteDoc(doc(db, `users/${auth.currentUser.uid}/friends`, id));
         const newList = friendsList.filter((friend) => friend.id !== id);
         setFriendsList(sortFriends(newList));
     };
@@ -52,7 +72,7 @@ const Friends = ({ isAuth }) => {
         if (!isAuth) {
             navigate("/login");
         }
-    }, []);
+    }, [isAuth, navigate]);
 
     return (
         <div>

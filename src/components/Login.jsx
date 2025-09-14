@@ -9,7 +9,14 @@ const Login = ({ setIsAuth }) => {
   const loginInWithGoogle = () => {
     // GoogleでLogin
     signInWithPopup(auth, provider).then((result) => {
+
+      const user = result.user;
+
       localStorage.setItem("isAuth", true);
+
+      localStorage.setItem("uid", user.uid);
+      localStorage.setItem("username", user.displayName);
+
       setIsAuth(true);
       navigate("/");
 
