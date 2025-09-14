@@ -1,23 +1,42 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase";
+import { db, auth } from "../firebase";
 
 const SearchEpisode = () => {
   const [friendsList, setFriendsList] = useState([]);
   const [selectedFriends, setSelectedFriends] = useState([]);
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
-
   useEffect(() => {
-    const fetchData = async () => {
-      const friendsSnap = await getDocs(collection(db, "friends"));
-      setFriendsList(friendsSnap.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (!user) {
+        console.log("未ログインです");
+        return;
+      }
 
-      const postsSnap = await getDocs(collection(db, "posts"));
-      setPosts(postsSnap.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-    fetchData();
+      console.log("ログインユーザー:", user);
+
+      // 自分の友達
+      const friendsSnap = await getDocs(
+        collection(db, `users/${user.uid}/friends`)
+      );
+      const friends = friendsSnap.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+      setFriendsList(friends);
+
+      // 自分の投稿
+      const postsSnap = await getDocs(
+        collection(db, `users/${user.uid}/posts`)
+      );
+      const postsData = postsSnap.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+      setPosts(postsData);
+
+      // 初期は全件表示
+      setFilteredPosts(postsData);
+    });
+
+    return () => unsubscribe();
   }, []);
+
 
   const handleSearch = () => {
     if (selectedFriends.length === 0) {

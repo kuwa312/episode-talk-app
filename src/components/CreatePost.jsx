@@ -11,24 +11,30 @@ const CreatePost = ({ isAuth }) => {
   const navigate = useNavigate();
 
   const createPost = async () => {
-    await addDoc(collection(db, "posts"), {
-      title: title || "",
-      postsText: postText || "",
-      author: {
-        username: auth.currentUser.displayName,
-        id: auth.currentUser.uid,
-      },
-    });
+
+    if (!auth.currentUser) return;
+    await addDoc(
+      collection(db, `users/${auth.currentUser.uid}/posts`), // 👈 ユーザーごとの posts サブコレクション
+      {
+        title: title || "",
+        postsText: postText || "",
+        author: {
+          username: auth.currentUser.displayName,
+          id: auth.currentUser.uid,
+        },
+        createdAt: new Date(),
+      }
+    );
 
     navigate("/");
-    q;
   };
+
 
   useEffect(() => {
     if (!isAuth) {
       navigate("/login");
     }
-  }, []);
+  }, [isAuth, navigate]);
 
   return (
     <div className="page">
