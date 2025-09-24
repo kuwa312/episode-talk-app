@@ -14,7 +14,7 @@ const CreatePost = ({ isAuth }) => {
 
     if (!auth.currentUser) return;
     await addDoc(
-      collection(db, `users/${auth.currentUser.uid}/posts`), // 👈 ユーザーごとの posts サブコレクション
+      collection(db, `users/${auth.currentUser.uid}/posts`),
       {
         title: title || "",
         postsText: postText || "",
