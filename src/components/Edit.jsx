@@ -63,7 +63,7 @@ const Edit = () => {
         // すでに選択されていれば削除
         return prev.filter((f) => f.friendId !== friendId);
       } else {
-        // 新しく選択 → rating初期値は3にしておく
+        // 新しく選択 → rating初期値は3
         return [...prev, { friendId, rating: 3 }];
       }
     });
