@@ -22,7 +22,8 @@ https://episode-talk-management.web.app/
 
 <br />
 
-## 関連記事
+<!-- ## Qiita -->
+
 
 <br />
 
@@ -87,13 +88,13 @@ https://episode-talk-management.web.app/
 
 <br />
 
-## ER 図
+<!-- ## ER 図
 
 <br />
 
 ## インフラ構成図
 
-<br />
+<br /> -->
 
 ## 今後の展望
 
