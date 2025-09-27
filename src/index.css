@@ -20,7 +20,7 @@ body::before {
   left: 0;
   width: 100%;
   min-height: calc(100% - 48px);
-  background-image: url('assets/3550599_l.jpg');
+  background-image: url('assets/3550599_s.jpg');
   background-size: 85px auto;
   background-repeat: repeat;
   opacity: 0.2;
