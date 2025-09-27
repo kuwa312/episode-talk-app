@@ -79,7 +79,7 @@ const Login = ({ setIsAuth }) => {
 
   return (
     <div className="page">
-      <div className="card mt-10">
+      <div className="loginCard mt-10">
         <p className="text-lg mb-4 text-center">ログインして始める</p>
         <button className='btn-blue' onClick={loginInWithGoogle}>Googleでログイン</button>
         <button className='btn-gray' onClick={loginAnonymously}>ゲストとして試す</button>

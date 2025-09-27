@@ -64,6 +64,9 @@ body::before {
   @apply w-full bg-white rounded-xl shadow-md flex flex-col gap-3 p-4 lg:p-5;
 }
 
+.loginCard, .logoutCard {
+  @apply card  max-w-[550px] mx-auto;
+}
 
 .input,
 .textarea {
