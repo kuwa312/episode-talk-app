@@ -10,16 +10,40 @@ const Login = ({ setIsAuth }) => {
 
   // ゲストログイン用の初期データ
   const defaultFriends = [
-    { username: "太郎" },
-    { username: "花子" },
-    { username: "John" },
+    { username: "friend1" },
+    { username: "friend2" },
+    { username: "friend3" },
+  ];
+
+  const defaultPosts = [
+    {
+      title: "episode1",
+      postsText: "context1",
+      createdAt: new Date(),
+    },
+    {
+      title: "episode2",
+      postsText: "context2",
+      createdAt: new Date(),
+    },
   ];
 
   // 初期データをdbに追加
-  const initFriends = async (uid) => {
+  const initData = async (uid) => {
     const friendsRef = collection(db, `users/${uid}/friends`);
     for (const friend of defaultFriends) {
       await addDoc(friendsRef, friend);
+    }
+
+    const postsRef = collection(db, `users/${uid}/posts`);
+    for (const post of defaultPosts) {
+      await addDoc(postsRef, {
+        ...post,
+        author: {
+          username: "ゲストユーザー",
+          id: uid,
+        },
+      });
     }
   };
 
@@ -34,7 +58,7 @@ const Login = ({ setIsAuth }) => {
     });
   };
 
-  // 匿名ログイン
+  // ゲストログイン
   const loginAnonymously = () => {
     signInAnonymously(auth)
       .then(async (result) => {
@@ -43,8 +67,8 @@ const Login = ({ setIsAuth }) => {
         localStorage.setItem("uid", user.uid);
         localStorage.setItem("username", "ゲストユーザー");
 
-        // 初期データを必ず追加
-        await initFriends(user.uid);
+        // 初期データを追加
+        await initData(user.uid);
 
         setIsAuth(true);
         navigate("/");
