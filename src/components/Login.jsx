@@ -10,20 +10,25 @@ const Login = ({ setIsAuth }) => {
 
   // ゲストログイン用の初期データ
   const defaultFriends = [
-    { username: "friend1" },
-    { username: "friend2" },
-    { username: "friend3" },
+    { username: "山田" },
+    { username: "田中" },
+    { username: "矢井" },
   ];
 
   const defaultPosts = [
     {
-      title: "episode1",
-      postsText: "context1",
+      title: "バ先のまっほー",
+      postsText: "",
       createdAt: new Date(),
     },
     {
-      title: "episode2",
-      postsText: "context2",
+      title: "左足から車に乗るヤツの話",
+      postsText: "",
+      createdAt: new Date(),
+    },
+    {
+      title: "町内会に参加した話",
+      postsText: "",
       createdAt: new Date(),
     },
   ];
