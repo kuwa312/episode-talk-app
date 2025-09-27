@@ -5,14 +5,15 @@ import { getFirestore } from "firebase/firestore";
 import { GoogleAuthProvider } from "firebase/auth";
 // import { GoogleAuthProvider } from "firebase/auth/web-extension";
 
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDW2s3evdpcDdYVC5Kuol1mV8BMr-owTbo",
-  authDomain: "episode-talk-management.firebaseapp.com",
-  projectId: "episode-talk-management",
-  storageBucket: "episode-talk-management.firebasestorage.app",
-  messagingSenderId: "442062132204",
-  appId: "1:442062132204:web:7402c1888b40a17f04a6c9",
-  measurementId: "G-RR3L5TE1ME",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
