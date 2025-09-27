@@ -10,4 +10,4 @@ ER図
 インフラ構成図
 今後の展望 -->
 
-![](images/readme_1.jpg)
+![画像](images/readme_1.jpg)
