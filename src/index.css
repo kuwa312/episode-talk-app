@@ -2,17 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* body {
-    margin: 0;
-    height: 100%;
-    background-color: rgb(255, 248, 231);
-    font-family: 'Poppins', sans-serif;
-    @apply font-semibold ;
-    background-image: url('assets/3550599_l.jpg');
-    background-size: 80px auto;
-    background-position: 0 48px; 
-    background-repeat: repeat;
-} */
 html, body {
   margin: 0;
   padding: 0;
@@ -47,6 +36,15 @@ body::before {
 
 .btn-blue:hover {
     @apply bg-blue-600 transition-colors;
+}
+
+
+.btn-gray {
+    @apply btn bg-gray-600 text-white;
+}
+
+.btn-gray:hover {
+    @apply bg-gray-700 transition-colors;
 }
 
 
