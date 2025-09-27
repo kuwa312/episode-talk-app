@@ -59,6 +59,8 @@ https://episode-talk-management.web.app/
 エピソード登録
 未共有エピソード検索
 
+<br />
+
 ## 機能一覧
 
 | ログイン画面 | 　ともだち画面 |
