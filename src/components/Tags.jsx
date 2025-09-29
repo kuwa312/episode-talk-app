@@ -18,7 +18,7 @@ const Tags = ({ isAuth }) => {
 
         // tags コレクションをリアルタイムで監視
         const tagsRef = collection(db, `users/${auth.currentUser.uid}/tags`);
-        const q = query(tagsRef, orderBy("tagname")); // 50音順にソート
+        const q = query(tagsRef, orderBy("name")); // 50音順にソート
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const list = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
             setTagsList(list);
@@ -68,7 +68,7 @@ const Tags = ({ isAuth }) => {
                             md:text-base
                             border border-gray-300 rounded-lg bg-gray-50"
                         >
-                            {tag.tagname || "No Name"}
+                            {tag.name || "No Name"}
                             <button className="btn-red" onClick={() => deleteTag(tag.id)}>削除</button>
                         </li>
                     ))}
