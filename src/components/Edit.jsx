@@ -86,10 +86,10 @@ const Edit = () => {
     if (tagname === "") return;
 
     const docRef = await addDoc(collection(db,  `users/${auth.currentUser.uid}/tags`), {
-      name: tagname,
+      tagname: tagname,
     });
 
-    const newList = [...tagsList, { id: docRef.id, name: tagname }];
+    const newList = [...tagsList, { id: docRef.id, tagname: tagname }];
     setTagsList(newList);
     setTagname("");
   }
@@ -208,7 +208,7 @@ const Edit = () => {
                     checked={!!selected}
                     onChange={() => handleTagsChange(tag.id)}
                   />
-                  {tag.name}
+                  {tag.tagname}
                 </label>
               </div>
             );

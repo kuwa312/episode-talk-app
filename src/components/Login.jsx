@@ -16,9 +16,9 @@ const Login = ({ setIsAuth }) => {
   ];
 
   const defaultTags = [
-    { name: "殿堂入り" },
-    { name: "超ウケた" },
-    { name: "ウケた" },
+    { tagname: "殿堂入り" },
+    { tagname: "超ウケた" },
+    { tagname: "ウケた" },
   ];
 
   const defaultPosts = (friendsIds, tagIds) => [
