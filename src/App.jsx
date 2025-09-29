@@ -9,6 +9,7 @@ import { useState } from "react";
 import Friends from "./components/Friends";
 import Edit from "./components/Edit";
 import SearchEpisode from "./components/SearchEpisode";
+import Tags from "./components/Tags";
 
 function App() {
   const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth") === "true");
@@ -21,6 +22,7 @@ function App() {
         <Route path="/" element={<Home isAuth={isAuth} />}></Route>
         <Route path="/createpost" element={<CreatePost isAuth={isAuth} />}></Route>
         <Route path="/friends" element={<Friends isAuth={isAuth} />}></Route>
+        <Route path="/tags" element={<Tags isAuth={isAuth} />}></Route>
         <Route path="/search" element={<SearchEpisode isAuth={isAuth} />}></Route>
         <Route path="/login" element={<Login setIsAuth={setIsAuth} />}></Route>
         <Route path="/edit/:id" element={<Edit />} />
