@@ -15,7 +15,13 @@ const Login = ({ setIsAuth }) => {
     { username: "矢井" },
   ];
 
-  const defaultPosts = (friendsIds) => [
+  const defaultTags = [
+    { name: "殿堂入り" },
+    { name: "超ウケた" },
+    { name: "ウケた" },
+  ];
+
+  const defaultPosts = (friendsIds, tagIds) => [
     {
       title: "バ先のまっほー",
       postsText: "",
@@ -24,6 +30,7 @@ const Login = ({ setIsAuth }) => {
         { friendId: friendsIds[0], rating: 4 },
         { friendId: friendsIds[1], rating: 5 },
       ],
+      tags: [tagIds[0]],
     },
     {
       title: "左足から車に乗るヤツの話",
@@ -33,6 +40,7 @@ const Login = ({ setIsAuth }) => {
         { friendId: friendsIds[1], rating: 3 },
         { friendId: friendsIds[2], rating: 2 },
       ],
+      tags: [tagIds[2]],
     },
     {
       title: "町内会に参加した話",
@@ -41,8 +49,11 @@ const Login = ({ setIsAuth }) => {
       talkedTo: [
         { friendId: friendsIds[2], rating: 4 },
       ],
+      tags: [tagIds[1]],
     },
   ];
+
+
 
   // 初期データをdbに追加
   const initData = async (uid) => {
@@ -54,15 +65,23 @@ const Login = ({ setIsAuth }) => {
       friendIds.push(ref.id);
     }
 
-    // posts を追加 (talkedTo に friends の id を紐付ける)
+    const tagsRef = collection(db,  `users/${uid}/tags`);
+    const tagIds = [];
+    for (const tag of defaultTags) {
+      const ref = await addDoc(tagsRef, tag);
+      tagIds.push(ref.id);
+    }
+
+    // posts を追加 (talkedTo と tags を紐付ける)
     const postsRef = collection(db, `users/${uid}/posts`);
-    for (const post of defaultPosts(friendIds)) {
+    for (const post of defaultPosts(friendIds, tagIds)) {
       await addDoc(postsRef, {
         ...post,
         author: {
           username: "ゲストユーザー",
           id: uid,
         },
+        // createdAt: serverTimestamp(),
       });
     }
   };

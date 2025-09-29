@@ -27,7 +27,7 @@ const CreatePost = ({ isAuth }) => {
       if (!isAuth) {
         navigate("/login");
       }
-      const data = await getDocs(collection(db, "tags"));
+      const data = await getDocs(collection(db,  `users/${auth.currentUser.uid}/tags`));
       setTagsList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     }
 
@@ -47,7 +47,7 @@ const CreatePost = ({ isAuth }) => {
   const addTag = async () => {
     if (tagname === "") return;
 
-    const docRef = await addDoc(collection(db, "tags"), {
+    const docRef = await addDoc(collection(db,  `users/${auth.currentUser.uid}/tags`), {
       name: tagname,
     });
 
