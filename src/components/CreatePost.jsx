@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../index.css";
-import { addDoc, collection, getDoc } from "firebase/firestore";
+import { addDoc, collection, getDoc, getDocs } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
@@ -35,22 +35,22 @@ const CreatePost = ({ isAuth }) => {
 
 
   useEffect(() => {
-    const dummyTags = [
-      { id: "1", name: "友達" },
-      { id: "2", name: "学校" },
-      { id: "3", name: "旅行" },
-    ];
-    setTagsList(dummyTags);
+    // const dummyTags = [
+    //   { id: "1", name: "友達" },
+    //   { id: "2", name: "学校" },
+    //   { id: "3", name: "旅行" },
+    // ];
+    // setTagsList(dummyTags);
 
-    // const fetchTags = async () => {
-    //   if (!isAuth) {
-    //     navigate("/login");
-    //   }
-    //   const data = await getDocs(collection(db, `tags`));
-    //   setTagsList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    // }
+    const fetchTags = async () => {
+      if (!isAuth) {
+        navigate("/login");
+      }
+      const data = await getDocs(collection(db, "tags"));
+      setTagsList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    }
 
-    // fetchTags();
+    fetchTags();
 
   }, [isAuth, navigate]);
 
