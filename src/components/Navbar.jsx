@@ -14,10 +14,12 @@ import {
 
 const Navbar = ({ isAuth }) => {
   return (
-    <nav className="  flex justify-center items-center 
-  h-12 gap-11 bg-orange-400
-  sm:h-12 sm:gap-11
-  xs:h-[48px] xs:gap-[30px]">
+    <nav className="flex justify-center items-center 
+  h-12 gap-8 bg-orange-400
+  sm:h-12 sm:gap-9
+  xs:h-[48px] xs:gap-[35px]">
+
+
       <Link className="link" to={"/"}>
         <span className="hidden sm:inline">
           <FontAwesomeIcon icon={faHouse} />
@@ -50,7 +52,7 @@ const Navbar = ({ isAuth }) => {
             <span className="hidden sm:inline">
               <FontAwesomeIcon icon={faUsers} />
             </span>
-            ともだち
+            友達
           </Link>
           <Link className="link" to={"/tags"}>
             {/* <span className="hidden sm:inline"> */}
