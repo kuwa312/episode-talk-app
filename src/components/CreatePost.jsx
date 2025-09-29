@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "../index.css";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
 const CreatePost = ({ isAuth }) => {
   const [title, setTitle] = useState();
   const [postText, setPostText] = useState();
+  const [tagsList, setTagsList] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
 
   const navigate = useNavigate();
 
@@ -18,6 +20,7 @@ const CreatePost = ({ isAuth }) => {
       {
         title: title || "",
         postsText: postText || "",
+        tags: selectedTags,
         author: {
           username: auth.currentUser.displayName,
           id: auth.currentUser.uid,
@@ -31,10 +34,35 @@ const CreatePost = ({ isAuth }) => {
 
 
   useEffect(() => {
-    if (!isAuth) {
-      navigate("/login");
-    }
+    const dummyTags = [
+    { id: "1", name: "友達" },
+    { id: "2", name: "学校" },
+    { id: "3", name: "旅行" },
+  ];
+  setTagsList(dummyTags);
+
+    // const fetchTags = async () => {
+    //   if (!isAuth) {
+    //     navigate("/login");
+    //   }
+    //   const data = await getDocs(collection(db, `tags`));
+    //   setTagsList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    // }
+
+    // fetchTags();
+
   }, [isAuth, navigate]);
+
+    // 選択状態を切り替え
+  const handleTagsChange = (tagId) => {
+  setSelectedTags((prev) =>
+    prev.includes(tagId)
+      ? prev.filter((id) => id !== tagId) // 選択解除
+      : [...prev, tagId] // 追加
+  );
+};
+
+
 
   return (
     <div className="page">
@@ -55,6 +83,27 @@ const CreatePost = ({ isAuth }) => {
             onChange={(e) => setPostText(e.target.value)}
           ></textarea>
         </div>
+        <div>タグを選択</div>
+
+
+        <div className="flex flex-wrap gap-3 mx-0 my-0">
+          {tagsList.map((tag) => {
+            const selected = selectedTags.includes(tag.id);
+            return (
+              <div key={tag.id} className="flex items-center gap-3 bg-gray-100 friendOption px-1 py-2 md:px-2 md:py-3 rounded-lg shadow-sm translate-colors hover:bg-gray-200 text-sm md:text-base">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={!!selected}
+                    onChange={() => handleTagsChange(tag.id)}
+                  />
+                  {tag.name}
+                </label>
+              </div>
+            );
+          })}
+        </div>
+        
         <button className="btn-blue" onClick={createPost}>
           追加する
         </button>
