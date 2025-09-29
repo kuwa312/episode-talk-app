@@ -15,33 +15,48 @@ const Login = ({ setIsAuth }) => {
     { username: "矢井" },
   ];
 
-  const defaultPosts = [
+  const defaultPosts = (friendsIds) => [
     {
       title: "バ先のまっほー",
       postsText: "",
       createdAt: new Date(),
+      talkedTo: [
+        { friendId: friendsIds[0], rating: 4 },
+        { friendId: friendsIds[1], rating: 5 },
+      ],
     },
     {
       title: "左足から車に乗るヤツの話",
       postsText: "",
       createdAt: new Date(),
+      talkedTo: [
+        { friendId: friendsIds[1], rating: 3 },
+        { friendId: friendsIds[2], rating: 2 },
+      ],
     },
     {
       title: "町内会に参加した話",
       postsText: "",
       createdAt: new Date(),
+      talkedTo: [
+        { friendId: friendsIds[2], rating: 4 },
+      ],
     },
   ];
 
   // 初期データをdbに追加
   const initData = async (uid) => {
+    // まず friends を追加して ID を控える
     const friendsRef = collection(db, `users/${uid}/friends`);
+    const friendIds = [];
     for (const friend of defaultFriends) {
-      await addDoc(friendsRef, friend);
+      const ref = await addDoc(friendsRef, friend);
+      friendIds.push(ref.id);
     }
 
+    // posts を追加 (talkedTo に friends の id を紐付ける)
     const postsRef = collection(db, `users/${uid}/posts`);
-    for (const post of defaultPosts) {
+    for (const post of defaultPosts(friendIds)) {
       await addDoc(postsRef, {
         ...post,
         author: {
@@ -51,6 +66,7 @@ const Login = ({ setIsAuth }) => {
       });
     }
   };
+
 
   const loginInWithGoogle = () => {
     signInWithPopup(auth, provider).then((result) => {
