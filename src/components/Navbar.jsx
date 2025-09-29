@@ -52,6 +52,12 @@ const Navbar = ({ isAuth }) => {
             </span>
             ともだち
           </Link>
+          <Link className="link" to={"/tags"}>
+            {/* <span className="hidden sm:inline"> */}
+              {/* <FontAwesomeIcon icon={faUsers} /> */}
+            {/* </span> */}
+            タグ
+          </Link>
           <Link className="link" to={"/logout"}>
             <FontAwesomeIcon icon={faArrowRightToBracket} />
             <span className="hidden sm:inline">ログアウト</span>
