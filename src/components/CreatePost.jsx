@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const CreatePost = ({ isAuth }) => {
   const [title, setTitle] = useState();
   const [postText, setPostText] = useState();
+  const [tagname, setTagname] = useState("");
   const [tagsList, setTagsList] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
 
@@ -35,11 +36,11 @@ const CreatePost = ({ isAuth }) => {
 
   useEffect(() => {
     const dummyTags = [
-    { id: "1", name: "友達" },
-    { id: "2", name: "学校" },
-    { id: "3", name: "旅行" },
-  ];
-  setTagsList(dummyTags);
+      { id: "1", name: "友達" },
+      { id: "2", name: "学校" },
+      { id: "3", name: "旅行" },
+    ];
+    setTagsList(dummyTags);
 
     // const fetchTags = async () => {
     //   if (!isAuth) {
@@ -53,15 +54,26 @@ const CreatePost = ({ isAuth }) => {
 
   }, [isAuth, navigate]);
 
-    // 選択状態を切り替え
+  // 選択状態を切り替え
   const handleTagsChange = (tagId) => {
-  setSelectedTags((prev) =>
-    prev.includes(tagId)
-      ? prev.filter((id) => id !== tagId) // 選択解除
-      : [...prev, tagId] // 追加
-  );
-};
+    setSelectedTags((prev) =>
+      prev.includes(tagId)
+        ? prev.filter((id) => id !== tagId) // 選択解除
+        : [...prev, tagId] // 追加
+    );
+  };
 
+  const addTag = async () => {
+    if (tagname === "") return;
+
+    const docRef = await addDoc(collection(db, "tags"), {
+      name: tagname,
+    });
+
+    const newList = [...tagsList, { id: docRef.id, name: tagname }];
+    setTagsList(newList);
+    setTagname("");
+  }
 
 
   return (
@@ -103,7 +115,18 @@ const CreatePost = ({ isAuth }) => {
             );
           })}
         </div>
-        
+        <div className="flex gap-2" >
+          <input
+            className="input flex-1"
+            type="text"
+            value={tagname}
+            placeholder="追加するタグ"
+            onChange={(e) => setTagname(e.target.value)}
+          />
+          <button className="btn-blue" onClick={addTag}>タグを追加</button>
+          {/* <button className="btn-blue" onClick={addFriend}>追加</button> */}
+        </div>
+
         <button className="btn-blue" onClick={createPost}>
           追加する
         </button>
