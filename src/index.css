@@ -9,8 +9,8 @@ html, body {
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
   position: relative;
-    background-color: rgb(255, 248, 231);
-    z-index: -2;
+  background-color: rgb(255, 248, 231);
+  z-index: -2;
 }
 
 body::before {
@@ -26,61 +26,70 @@ body::before {
   opacity: 0.2;
   z-index: -1;
 }
-.btn {
-    @apply font-bold py-2 px-6 rounded-lg shadow-md ;
-}
 
-.btn-blue {
+@layer components {
+  .btn {
+    @apply font-bold py-2 px-6 rounded-lg shadow-md;
+  }
+
+  .btn-sm {
+    @apply btn py-1.5 px-4 text-sm rounded-md;
+  }
+
+  .btn-blue {
     @apply btn bg-blue-500 text-white;
-}
-
-.btn-blue:hover {
+  }
+  .btn-blue:hover {
     @apply bg-blue-600 transition-colors;
-}
+  }
 
+  .btn-blue-sm {
+    @apply btn-sm bg-blue-500 text-white;
+  }
+  .btn-blue-sm:hover {
+    @apply bg-blue-600 transition-colors;
+  }
 
-.btn-gray {
+  .btn-gray {
     @apply btn bg-gray-600 text-white;
-}
-
-.btn-gray:hover {
+  }
+  .btn-gray:hover {
     @apply bg-gray-700 transition-colors;
-}
+  }
 
-
-.btn-red {
+  .btn-red {
     @apply btn bg-red-500 text-white;
-}
-
-.btn-red:hover {
+  }
+  .btn-red:hover {
     @apply bg-red-600 transition-colors;
-}
+  }
 
-.page {
-  @apply flex flex-col gap-5 p-4 mx-auto sm:p-7 lg:max-w-[950px];
-}
+  .page {
+    @apply flex flex-col gap-5 p-4 mx-auto sm:p-7 lg:max-w-[950px];
+  }
 
-.card {
-  @apply w-full bg-white rounded-xl shadow-md flex flex-col gap-3 p-4 lg:p-5;
-}
+  .card {
+    @apply w-full bg-white rounded-xl shadow-md flex flex-col gap-3 p-4 lg:p-5;
+  }
 
-.loginCard, .logoutCard {
-  @apply card  max-w-[550px] mx-auto;
-}
+  .loginCard, .logoutCard {
+    @apply card max-w-[550px] mx-auto;
+  }
 
-.input,
-.textarea {
-  @apply px-3 py-2 rounded-md border border-gray-300 text-base w-full box-border resize-y;
-}
+  .input,
+  .textarea {
+    @apply px-3 py-2 rounded-md border border-gray-300 text-base w-full box-border resize-y;
+  }
 
-.textarea {
-  @apply min-h-[120px];
-}
+  .textarea {
+    @apply min-h-[120px];
+  }
 
-.link {
-  @apply no-underline text-white transition duration-300 hover:text-[cadetblue] flex items-center;
-}
+  .link {
+    @apply no-underline text-white transition duration-300 hover:text-[cadetblue] flex items-center;
+  }
 
-.link svg {
-  @apply ml-[5px];
+  .link svg {
+    @apply ml-[5px];
+  }
 }

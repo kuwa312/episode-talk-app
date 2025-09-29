@@ -125,7 +125,7 @@ const SearchEpisode = () => {
                   .filter((name) => name)
                   .join(", ")}
               </p>
-              <button className="btn-blue mt-2" onClick={() => handleEdit(post)}>編集</button>
+              <button className="btn-blue-sm mt-2" onClick={() => handleEdit(post)}>編集</button>
 
             </div>
           ))
