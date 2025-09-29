@@ -9,6 +9,9 @@ const SearchEpisode = () => {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
 
+  const [tagsList, setTagsList] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,6 +30,13 @@ const SearchEpisode = () => {
       const friends = friendsSnap.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
       setFriendsList(friends);
 
+      // タグ取得
+      const tagsSnap = await getDocs(
+        collection(db, `users/${user.uid}/tags`)
+      );
+      setTagsList(tagsSnap.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+
+
       // 自分の投稿
       const postsSnap = await getDocs(
         collection(db, `users/${user.uid}/posts`)
@@ -38,33 +48,36 @@ const SearchEpisode = () => {
       setFilteredPosts(postsData);
     });
 
-    return () => unsubscribe();
   }, []);
 
 
-  const handleSearch = () => {
-    if (selectedFriends.length === 0) {
-      setFilteredPosts(posts);
-      return;
-    }
+ const handleFriendChange = (friendId) => {
+    setSelectedFriends(prev =>
+      prev.includes(friendId) ? prev.filter(id => id !== friendId) : [...prev, friendId]
+    );
+  };
 
-    const result = posts.filter((post) => {
-      const talkedTo = post.talkedTo || [];
-      const talkedIds = talkedTo.map((t) =>
-        typeof t === "string" ? t : t.friendId
-      );
-      return selectedFriends.every((friendId) => !talkedIds.includes(friendId));
+
+  const handleTagChange = (tagId) => {
+    setSelectedTags(prev =>
+      prev.includes(tagId) ? prev.filter(id => id !== tagId) : [...prev, tagId]
+    );
+  };
+
+  const handleSearch = () => {
+    const result = posts.filter(post => {
+
+      const talkedIds = (post.talkedTo || []).map(t => (typeof t === "string" ? t : t.friendId));
+      const friendOk = selectedFriends.every(id => !talkedIds.includes(id));
+
+
+      const postTags = post.tags || [];
+      const tagOk = selectedTags.length === 0 || selectedTags.every(tagId => postTags.includes(tagId));
+
+      return friendOk && tagOk;
     });
 
     setFilteredPosts(result);
-  };
-
-  const handleFriendChange = (friendId) => {
-    setSelectedFriends((prev) =>
-      prev.includes(friendId)
-        ? prev.filter((id) => id !== friendId)
-        : [...prev, friendId]
-    );
   };
 
   const handleEdit = (post) => {
@@ -89,6 +102,20 @@ const SearchEpisode = () => {
               onChange={() => handleFriendChange(friend.id)}
             />
             {friend.username}
+          </label>
+        ))}
+      </div>
+
+      <div className="mb-2">タグで絞り込む（複数選択可）</div>
+      <div className="flex flex-wrap gap-3 mb-4">
+        {tagsList.map(tag => (
+          <label key={tag.id} className="flex items-center gap-2 bg-gray-100 px-3 py-1.5 rounded-md cursor-pointer hover:bg-gray-200">
+            <input
+              type="checkbox"
+              checked={selectedTags.includes(tag.id)}
+              onChange={() => handleTagChange(tag.id)}
+            />
+            {tag.name}
           </label>
         ))}
       </div>
@@ -124,6 +151,10 @@ const SearchEpisode = () => {
                   })
                   .filter((name) => name)
                   .join(", ")}
+              </p>
+              <p className="text-sm text-gray-600">
+                タグ:{" "}
+                {(post.tags || []).map(tagId => tagsList.find(t => t.id === tagId)?.name).filter(n => n).join(", ")}
               </p>
               <button className="btn-blue-sm mt-2" onClick={() => handleEdit(post)}>編集</button>
 
