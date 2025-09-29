@@ -98,9 +98,9 @@ const CreatePost = ({ isAuth }) => {
             onChange={(e) => setPostText(e.target.value)}
           ></textarea>
         </div>
-        <div>タグを選択</div>
 
 
+        <div>タグを選択(複数選択可)</div>
         <div className="flex flex-wrap gap-3 mx-0 my-0">
           {tagsList.map((tag) => {
             const selected = selectedTags.includes(tag.id);
@@ -123,7 +123,7 @@ const CreatePost = ({ isAuth }) => {
             className="input flex-1"
             type="text"
             value={tagname}
-            placeholder="追加するタグ"
+            placeholder="タグを新規作成"
             onChange={(e) => setTagname(e.target.value)}
           />
           <button className="btn-blue" onClick={addTag}>タグを追加</button>
