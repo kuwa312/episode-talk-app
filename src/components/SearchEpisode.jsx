@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db, auth } from "../firebase";
+import { useNavigate } from "react-router-dom";
 
 const SearchEpisode = () => {
   const [friendsList, setFriendsList] = useState([]);
   const [selectedFriends, setSelectedFriends] = useState([]);
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (!user) {
@@ -63,6 +67,11 @@ const SearchEpisode = () => {
     );
   };
 
+  const handleEdit = (post) => {
+    navigate(`/edit/${post.id}`, { state: { post } });
+  };
+
+
   return (
     <div className="page p-4">
       <h1 className="text-center text-2xl mb-4">エピソードトーク検索</h1>
@@ -116,6 +125,8 @@ const SearchEpisode = () => {
                   .filter((name) => name)
                   .join(", ")}
               </p>
+              <button className="btn-blue mt-2" onClick={() => handleEdit(post)}>編集</button>
+
             </div>
           ))
         )}

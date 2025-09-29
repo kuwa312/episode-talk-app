@@ -42,7 +42,6 @@ const Friends = ({ isAuth }) => {
     }, []);
 
 
-    // 友達追加
     const addFriend = async () => {
 
         if (!username || !auth.currentUser) return;
@@ -54,7 +53,6 @@ const Friends = ({ isAuth }) => {
         setUsername("");
     };
 
-    // 友達削除
     const deleteFriend = async (id) => {
 
         if (!auth.currentUser) return;
