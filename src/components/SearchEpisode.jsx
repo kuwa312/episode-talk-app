@@ -115,7 +115,7 @@ const SearchEpisode = () => {
               checked={selectedTags.includes(tag.id)}
               onChange={() => handleTagChange(tag.id)}
             />
-            {tag.name}
+            {tag.tagname}
           </label>
         ))}
       </div>
@@ -149,12 +149,12 @@ const SearchEpisode = () => {
                     }
                     return "";
                   })
-                  .filter((name) => name)
+                  .filter((tagname) => tagname)
                   .join(", ")}
               </p>
               <p className="text-sm text-gray-600">
                 タグ:{" "}
-                {(post.tags || []).map(tagId => tagsList.find(t => t.id === tagId)?.name).filter(n => n).join(", ")}
+                {(post.tags || []).map(tagId => tagsList.find(t => t.id === tagId)?.tagname).filter(n => n).join(", ")}
               </p>
               <button className="btn-blue-sm mt-2" onClick={() => handleEdit(post)}>編集</button>
 

@@ -17,9 +17,9 @@ const CreatePost = ({ isAuth }) => {
 
   useEffect(() => {
     // const dummyTags = [
-    //   { id: "1", name: "友達" },
-    //   { id: "2", name: "学校" },
-    //   { id: "3", name: "旅行" },
+    //   { id: "1", tagname: "友達" },
+    //   { id: "2", tagname: "学校" },
+    //   { id: "3", tagname: "旅行" },
     // ];
     // setTagsList(dummyTags);
 
@@ -48,10 +48,10 @@ const CreatePost = ({ isAuth }) => {
     if (tagname === "") return;
 
     const docRef = await addDoc(collection(db,  `users/${auth.currentUser.uid}/tags`), {
-      name: tagname,
+      tagname: tagname,
     });
 
-    const newList = [...tagsList, { id: docRef.id, name: tagname }];
+    const newList = [...tagsList, { id: docRef.id, tagname: tagname }];
     setTagsList(newList);
     setTagname("");
   }
@@ -112,7 +112,7 @@ const CreatePost = ({ isAuth }) => {
                     checked={!!selected}
                     onChange={() => handleTagsChange(tag.id)}
                   />
-                  {tag.name}
+                  {tag.tagname}
                 </label>
               </div>
             );
