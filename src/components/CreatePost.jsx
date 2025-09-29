@@ -13,25 +13,6 @@ const CreatePost = ({ isAuth }) => {
 
   const navigate = useNavigate();
 
-  const createPost = async () => {
-
-    if (!auth.currentUser) return;
-    await addDoc(
-      collection(db, `users/${auth.currentUser.uid}/posts`),
-      {
-        title: title || "",
-        postsText: postText || "",
-        tags: selectedTags,
-        author: {
-          username: auth.currentUser.displayName,
-          id: auth.currentUser.uid,
-        },
-        createdAt: new Date(),
-      }
-    );
-
-    navigate("/");
-  };
 
 
   useEffect(() => {
@@ -74,6 +55,28 @@ const CreatePost = ({ isAuth }) => {
     setTagsList(newList);
     setTagname("");
   }
+
+  // 更新処理
+    const createPost = async () => {
+
+    if (!auth.currentUser) return;
+    await addDoc(
+      collection(db, `users/${auth.currentUser.uid}/posts`),
+      {
+        title: title || "",
+        postsText: postText || "",
+        tags: selectedTags,
+        author: {
+          username: auth.currentUser.displayName,
+          id: auth.currentUser.uid,
+        },
+        createdAt: new Date(),
+      }
+    );
+
+    navigate("/");
+  };
+
 
 
   return (
@@ -124,7 +127,6 @@ const CreatePost = ({ isAuth }) => {
             onChange={(e) => setTagname(e.target.value)}
           />
           <button className="btn-blue" onClick={addTag}>タグを追加</button>
-          {/* <button className="btn-blue" onClick={addFriend}>追加</button> */}
         </div>
 
         <button className="btn-blue" onClick={createPost}>

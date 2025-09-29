@@ -11,7 +11,9 @@ html, body {
   position: relative;
   background-color: rgb(255, 248, 231);
   z-index: -2;
+  color: #333;
 }
+  
 
 body::before {
   content: "";
