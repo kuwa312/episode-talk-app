@@ -11,6 +11,11 @@ const CreatePost = ({ isAuth }) => {
   const [tagsList, setTagsList] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
 
+  const [friendsList, setFriendsList] = useState([]);
+  const [selectedFriends, setSelectedFriends] = useState([]);
+
+
+
   const navigate = useNavigate();
 
 
@@ -23,17 +28,39 @@ const CreatePost = ({ isAuth }) => {
     // ];
     // setTagsList(dummyTags);
 
+    const fetchFriends = async () => {
+      if (!auth.currentUser) return;
+      const data = await getDocs(collection(db, `users/${auth.currentUser.uid}/friends`));
+      setFriendsList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+
+
     const fetchTags = async () => {
       if (!isAuth) {
         navigate("/login");
       }
-      const data = await getDocs(collection(db,  `users/${auth.currentUser.uid}/tags`));
+      const data = await getDocs(collection(db, `users/${auth.currentUser.uid}/tags`));
       setTagsList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     }
 
     fetchTags();
+    fetchFriends();
 
   }, [isAuth, navigate]);
+
+    // 友達の選択状態を切り替え
+  const handleFriendChange = (friendId) => {
+    setSelectedFriends((prev) => {
+      const exists = prev.find((f) => f.friendId === friendId);
+      if (exists) {
+        // すでに選択されていれば削除
+        return prev.filter((f) => f.friendId !== friendId);
+      } else {
+        // 新しく選択 → rating初期値は3
+        return [...prev, { friendId, rating: 3 }];
+      }
+    });
+  };
 
   // 選択状態を切り替え
   const handleTagsChange = (tagId) => {
@@ -47,7 +74,7 @@ const CreatePost = ({ isAuth }) => {
   const addTag = async () => {
     if (tagname === "") return;
 
-    const docRef = await addDoc(collection(db,  `users/${auth.currentUser.uid}/tags`), {
+    const docRef = await addDoc(collection(db, `users/${auth.currentUser.uid}/tags`), {
       tagname: tagname,
     });
 
@@ -57,7 +84,7 @@ const CreatePost = ({ isAuth }) => {
   }
 
   // 更新処理
-    const createPost = async () => {
+  const createPost = async () => {
 
     if (!auth.currentUser) return;
     await addDoc(
@@ -66,6 +93,7 @@ const CreatePost = ({ isAuth }) => {
         title: title || "",
         postsText: postText || "",
         tags: selectedTags,
+        talkedTo: selectedFriends,
         author: {
           username: auth.currentUser.displayName,
           id: auth.currentUser.uid,
@@ -97,6 +125,41 @@ const CreatePost = ({ isAuth }) => {
             placeholder="内容を記入"
             onChange={(e) => setPostText(e.target.value)}
           ></textarea>
+        </div>
+
+        <div>話した友達（複数選択 & 評価）</div>
+        <div className="flex flex-wrap gap-3 mx-0 my-0">
+          {friendsList.map((friend) => {
+            const selected = selectedFriends.find(
+              (f) => f.friendId === friend.id
+            );
+            return (
+              <div key={friend.id} className="flex items-center gap-3 bg-gray-100 friendOption px-1 py-2 md:px-2 md:py-3 rounded-lg shadow-sm translate-colors hover:bg-gray-200 text-sm md:text-base">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={!!selected}
+                    onChange={() => handleFriendChange(friend.id)}
+                  />
+                  {friend.username}
+                </label>
+                {selected && (
+                  <select className="px-2 py-1 rounded-md border border-gray-300 text-sm md:text-base bg-white ml-0 md:ml-1"
+                    value={selected.rating}
+                    onChange={(e) =>
+                      handleRatingChange(friend.id, e.target.value)
+                    }
+                  >
+                    {[1, 2, 3, 4, 5].map((num) => (
+                      <option key={num} value={num}>
+                        {num}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              </div>
+            );
+          })}
         </div>
 
 
