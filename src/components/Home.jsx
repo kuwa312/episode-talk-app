@@ -4,8 +4,6 @@ import {
   getDocs,
   deleteDoc,
   doc,
-  query,
-  where,
 } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { useNavigate } from "react-router-dom";
@@ -31,7 +29,6 @@ const Home = () => {
 
       setUser(currentUser);
 
-      // posts取得
       const postsSnapshot = await getDocs(
         collection(db, `users/${auth.currentUser.uid}/posts`)
       );

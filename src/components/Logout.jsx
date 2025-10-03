@@ -1,6 +1,6 @@
-import { signInWithPopup, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import React from "react";
-import { auth, provider } from "../firebase";
+import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
 

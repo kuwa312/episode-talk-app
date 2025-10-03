@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../index.css";
-import { addDoc, collection, getDoc, getDocs } from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
@@ -48,26 +48,22 @@ const CreatePost = ({ isAuth }) => {
 
   }, [isAuth, navigate]);
 
-    // 友達の選択状態を切り替え
   const handleFriendChange = (friendId) => {
     setSelectedFriends((prev) => {
       const exists = prev.find((f) => f.friendId === friendId);
       if (exists) {
-        // すでに選択されていれば削除
         return prev.filter((f) => f.friendId !== friendId);
       } else {
-        // 新しく選択 → rating初期値は3
         return [...prev, { friendId, rating: 3 }];
       }
     });
   };
 
-  // 選択状態を切り替え
   const handleTagsChange = (tagId) => {
     setSelectedTags((prev) =>
       prev.includes(tagId)
-        ? prev.filter((id) => id !== tagId) // 選択解除
-        : [...prev, tagId] // 追加
+        ? prev.filter((id) => id !== tagId)
+        : [...prev, tagId]
     );
   };
 
@@ -83,7 +79,6 @@ const CreatePost = ({ isAuth }) => {
     setTagname("");
   }
 
-  // 更新処理
   const createPost = async () => {
 
     if (!auth.currentUser) return;
