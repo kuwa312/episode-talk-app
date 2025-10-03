@@ -16,9 +16,8 @@ const Tags = ({ isAuth }) => {
 
         if (!auth.currentUser) return;
 
-        // tags コレクションをリアルタイムで監視
         const tagsRef = collection(db, `users/${auth.currentUser.uid}/tags`);
-        const q = query(tagsRef, orderBy("tagname")); // 50音順にソート
+        const q = query(tagsRef, orderBy("tagname"));
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const list = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
             setTagsList(list);
@@ -29,10 +28,8 @@ const Tags = ({ isAuth }) => {
 
     const addTag = async () => {
         // if (!tagname || !auth.currentUser) return;
-
         await addDoc(collection(db, `users/${auth.currentUser.uid}/tags`), { tagname });
         setTagname("");
-        // onSnapshot が自動で反映してくれるので setTagsList は不要
     };
 
     const deleteTag = async (id) => {
@@ -42,7 +39,6 @@ const Tags = ({ isAuth }) => {
         if (!confirmDelete) return;
 
         await deleteDoc(doc(db, `users/${auth.currentUser.uid}/tags`, id));
-        // onSnapshot が自動で反映してくれる
     };
 
     return (

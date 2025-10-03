@@ -19,7 +19,6 @@ const Friends = ({ isAuth }) => {
     const [username, setUsername] = useState("");
     const navigate = useNavigate();
 
-    // 50音順でソートする関数
     const sortFriends = (list) => {
         return list.sort((a, b) => a.username.localeCompare(b.username, "ja"));
     };
@@ -90,11 +89,7 @@ const Friends = ({ isAuth }) => {
                 <ul className="flex flex-col gap-2">
                     {friendsList.map((friend) => (
                         <li
-                            class="flex justify-between items-center
-         px-2.5 py-1.5 text-sm
-         sm:px-3 sm:py-2 sm:text-sm
-         md:text-base
-         border border-gray-300 rounded-lg bg-gray-50"
+                            class="flex justify-between items-center px-2.5 py-1.5 text-sm sm:px-3 sm:py-2 sm:text-sm md:text-base border border-gray-300 rounded-lg bg-gray-50"
                         >
                             {friend.username ? friend.username : "No Name"}
                             <button className="btn-red" onClick={() => deleteFriend(friend.id)}>削除</button>

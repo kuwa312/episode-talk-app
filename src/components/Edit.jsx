@@ -23,16 +23,14 @@ const Edit = () => {
   const [tagname, setTagname] = useState("");
   const [tagsList, setTagsList] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
-  // [{ friendId: "xxx", rating: 3 }, ...]
 
-  // 投稿データと友達データを取得
   useEffect(() => {
 
     const fetchTags = async () => {
       // if (!isAuth) {
       //   navigate("/login");
       // }
-      const data = await getDocs(collection(db,  `users/${auth.currentUser.uid}/tags`));
+      const data = await getDocs(collection(db, `users/${auth.currentUser.uid}/tags`));
       setTagsList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     }
 
@@ -72,20 +70,18 @@ const Edit = () => {
     fetchFriends();
   }, [id, navigate]);
 
-
-  // 選択状態を切り替え
   const handleTagsChange = (tagId) => {
     setSelectedTags((prev) =>
       prev.includes(tagId)
-        ? prev.filter((id) => id !== tagId) // 選択解除
-        : [...prev, tagId] // 追加
+        ? prev.filter((id) => id !== tagId)
+        : [...prev, tagId]
     );
   };
 
   const addTag = async () => {
     if (tagname === "") return;
 
-    const docRef = await addDoc(collection(db,  `users/${auth.currentUser.uid}/tags`), {
+    const docRef = await addDoc(collection(db, `users/${auth.currentUser.uid}/tags`), {
       tagname: tagname,
     });
 
@@ -95,24 +91,17 @@ const Edit = () => {
   }
 
 
-
-  // 友達の選択状態を切り替え
   const handleFriendChange = (friendId) => {
     setSelectedFriends((prev) => {
       const exists = prev.find((f) => f.friendId === friendId);
       if (exists) {
-        // すでに選択されていれば削除
         return prev.filter((f) => f.friendId !== friendId);
       } else {
-        // 新しく選択 → rating初期値は3
         return [...prev, { friendId, rating: 3 }];
       }
     });
   };
 
-
-
-  // 評価を変更
   const handleRatingChange = (friendId, rating) => {
     setSelectedFriends((prev) =>
       prev.map((f) =>
@@ -121,7 +110,6 @@ const Edit = () => {
     );
   };
 
-  // 更新処理
   const handleUpdate = async () => {
     if (authorId !== auth.currentUser?.uid) {
       alert("この投稿を編集する権限がありません。");
@@ -133,7 +121,7 @@ const Edit = () => {
       title,
       postsText,
       tags: selectedTags,
-      talkedTo: selectedFriends, // 評価込みで保存
+      talkedTo: selectedFriends,
     });
 
     navigate("/");
@@ -196,7 +184,7 @@ const Edit = () => {
           })}
         </div>
 
-                <div>タグを選択(複数選択可)</div>
+        <div>タグを選択(複数選択可)</div>
         <div className="flex flex-wrap gap-3 mx-0 my-0">
           {tagsList.map((tag) => {
             const selected = selectedTags.includes(tag.id);

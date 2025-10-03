@@ -53,9 +53,6 @@ const Login = ({ setIsAuth }) => {
     },
   ];
 
-
-
-  // 初期データをdbに追加
   const initData = async (uid) => {
     // まず friends を追加して ID を控える
     const friendsRef = collection(db, `users/${uid}/friends`);
@@ -65,7 +62,7 @@ const Login = ({ setIsAuth }) => {
       friendIds.push(ref.id);
     }
 
-    const tagsRef = collection(db,  `users/${uid}/tags`);
+    const tagsRef = collection(db, `users/${uid}/tags`);
     const tagIds = [];
     for (const tag of defaultTags) {
       const ref = await addDoc(tagsRef, tag);

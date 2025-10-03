@@ -23,35 +23,30 @@ const SearchEpisode = () => {
 
       console.log("ログインユーザー:", user);
 
-      // 自分の友達
       const friendsSnap = await getDocs(
         collection(db, `users/${user.uid}/friends`)
       );
       const friends = friendsSnap.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
       setFriendsList(friends);
 
-      // タグ取得
       const tagsSnap = await getDocs(
         collection(db, `users/${user.uid}/tags`)
       );
       setTagsList(tagsSnap.docs.map(doc => ({ ...doc.data(), id: doc.id })));
 
-
-      // 自分の投稿
       const postsSnap = await getDocs(
         collection(db, `users/${user.uid}/posts`)
       );
       const postsData = postsSnap.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
       setPosts(postsData);
 
-      // 初期は全件表示
       setFilteredPosts(postsData);
     });
 
   }, []);
 
 
- const handleFriendChange = (friendId) => {
+  const handleFriendChange = (friendId) => {
     setSelectedFriends(prev =>
       prev.includes(friendId) ? prev.filter(id => id !== friendId) : [...prev, friendId]
     );
