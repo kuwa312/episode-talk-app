@@ -22,7 +22,6 @@ https://episode-talk-management.web.app/
 
 <br />
 
-<!-- ## Qiita -->
 
 
 <br />
