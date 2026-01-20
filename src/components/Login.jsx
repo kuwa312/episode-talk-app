@@ -12,7 +12,7 @@ const Login = ({ setIsAuth }) => {
   const defaultFriends = [
     { username: "山田" },
     { username: "田中" },
-    { username: "佐藤" },
+    { username: "矢井" },
   ];
 
   const defaultTags = [
@@ -23,7 +23,7 @@ const Login = ({ setIsAuth }) => {
 
   const defaultPosts = (friendsIds, tagIds) => [
     {
-      title: "スンドゥブの豆腐落として洗ったら溶けてなくなった話",
+      title: "スンドゥブの豆腐落としたから洗ったら溶けてなくなった話",
       postsText: "",
       createdAt: new Date(),
       talkedTo: [
@@ -33,7 +33,7 @@ const Login = ({ setIsAuth }) => {
       tags: [tagIds[0]],
     },
     {
-      title: "取り皿を注文したら鶏からが来た話",
+      title: "「取り皿」を注文したら「鶏から」が来た話",
       postsText: "",
       createdAt: new Date(),
       talkedTo: [
