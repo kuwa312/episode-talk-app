@@ -63,6 +63,7 @@ https://episode-talk-management.web.app/
 
 ## 機能一覧
 
+
 | ログイン画面 | 　ともだち画面 |
 | ---------- | -------------- |
 | ![ログイン画面](/docs/img/login.jpg) | ![ともだち画面](/docs/img/friends.jpg) |
@@ -70,7 +71,7 @@ https://episode-talk-management.web.app/
 
 | エピソードトーク追加画面 |　エピソードトーク一覧画面 |
 | ---- | ---- |
-| ![エピソードトーク追加画面](/docs/img/createPost.jpg) | ![エピソードトーク一覧画面](/docs/img/home_v2.jpg) |
+| ![エピソードトーク追加画面](/docs/img/createPost_v2.jpg) | ![エピソードトーク一覧画面](/docs/img/home_v2.jpg) |
 | 新しくエピソードトークが追加できます。 | 追加したエピソードトークを確認できます。また、編集や削除ができます。 |
 
 | エピソードトーク検索画面 |　エピソードトーク編集画面 |
