@@ -30,6 +30,7 @@ const Edit = () => {
       // if (!isAuth) {
       //   navigate("/login");
       // }
+      if (!auth.currentUser) return;
       const data = await getDocs(collection(db, `users/${auth.currentUser.uid}/tags`));
       setTagsList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     }
