@@ -27,8 +27,10 @@ const Tags = ({ isAuth }) => {
     }, [isAuth, navigate]);
 
     const addTag = async () => {
-        // if (!tagname || !auth.currentUser) return;
-        await addDoc(collection(db, `users/${auth.currentUser.uid}/tags`), { tagname });
+        if (!auth.currentUser) return;
+        const trimmedTagname = tagname.trim();
+        if (!trimmedTagname) return;
+        await addDoc(collection(db, `users/${auth.currentUser.uid}/tags`), { tagname: trimmedTagname });
         setTagname("");
     };
 
