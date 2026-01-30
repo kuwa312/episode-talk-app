@@ -43,6 +43,7 @@ const SearchEpisode = () => {
       setFilteredPosts(postsData);
     });
 
+    return () => unsubscribe();
   }, []);
 
 
