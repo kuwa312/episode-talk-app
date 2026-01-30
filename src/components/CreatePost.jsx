@@ -59,6 +59,15 @@ const CreatePost = ({ isAuth }) => {
     });
   };
 
+
+  const handleRatingChange = (friendId, rating) => {
+    setSelectedFriends((prev) =>
+      prev.map((f) =>
+        f.friendId === friendId ? { ...f, rating: Number(rating) } : f
+      )
+    );
+  };
+
   const handleTagsChange = (tagId) => {
     setSelectedTags((prev) =>
       prev.includes(tagId)
