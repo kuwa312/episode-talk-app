@@ -86,10 +86,11 @@ const Friends = ({ isAuth }) => {
                     <button className="btn-blue" onClick={addFriend}>追加</button>
                 </div>
 
-                <ul className="flex flex-col gap-2">
+                    <ul className="flex flex-col gap-2">
                     {friendsList.map((friend) => (
                         <li
-                            class="flex justify-between items-center px-2.5 py-1.5 text-sm sm:px-3 sm:py-2 sm:text-sm md:text-base border border-gray-300 rounded-lg bg-gray-50"
+                            key={friend.id}
+                            className="flex justify-between items-center px-2.5 py-1.5 text-sm sm:px-3 sm:py-2 sm:text-sm md:text-base border border-gray-300 rounded-lg bg-gray-50"
                         >
                             {friend.username ? friend.username : "No Name"}
                             <button className="btn-red" onClick={() => deleteFriend(friend.id)}>削除</button>
