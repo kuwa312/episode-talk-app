@@ -1,15 +1,3 @@
-<!-- どのようなサービスなのかを表現するひとこと
-サービスの雰囲気が伝わる画像
-サービスのURL
-サービスに関する記事のURL
-サービスの概要
-サービスを開発した背景
-画面や機能の説明
-主な使用技術
-ER図
-インフラ構成図
-今後の展望 -->
-
 ![ヘッダー画像](docs/img/header.jpg)
 
 <br />
@@ -93,6 +81,16 @@ https://episode-talk-management.web.app/
 - **認証**: Firebase Authentication
 - **データベース**: Firestore
 - **デプロイ**: Firebase Hosting
+
+<br />
+
+## ローカル起動
+
+`npm install`
+
+`.env.example` を参考に `.env` を作成し、Firebase の設定値を入れてください。
+
+`npm run dev`
 
 <br />
 

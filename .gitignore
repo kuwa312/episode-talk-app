@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+.env
+.env.*
+!.env.example
+
+.firebase/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -24,5 +30,3 @@ dist-ssr
 *.sw?
 
 readme-images/
-
-.env.local
