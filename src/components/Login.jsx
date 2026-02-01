@@ -1,5 +1,5 @@
 import { signInWithPopup, signInAnonymously } from 'firebase/auth';
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, limit, query } from "firebase/firestore";
 import React from 'react'
 import { auth, provider, db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
@@ -54,8 +54,12 @@ const Login = ({ setIsAuth }) => {
   ];
 
   const initData = async (uid) => {
-    // まず friends を追加して ID を控える
+    // 初期データが既にある場合は二重投入を避ける
     const friendsRef = collection(db, `users/${uid}/friends`);
+    const existingFriends = await getDocs(query(friendsRef, limit(1)));
+    if (!existingFriends.empty) return;
+
+    // まず friends を追加して ID を控える
     const friendIds = [];
     for (const friend of defaultFriends) {
       const ref = await addDoc(friendsRef, friend);
