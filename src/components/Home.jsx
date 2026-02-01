@@ -17,6 +17,9 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    let retryTimeout = null;
+    let retried = false;
+
     const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
       if (!currentUser) {
         setUser(null);
@@ -28,27 +31,42 @@ const Home = () => {
       }
 
       setUser(currentUser);
+      setLoading(true);
 
-      const postsSnapshot = await getDocs(
-        collection(db, `users/${auth.currentUser.uid}/posts`)
-      );
-      const posts = postsSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+      const fetchOnce = async () => {
+        const postsSnapshot = await getDocs(
+          collection(db, `users/${currentUser.uid}/posts`)
+        );
+        const posts = postsSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
 
-      const friendsSnapshot = await getDocs(
-        collection(db, `users/${auth.currentUser.uid}/friends`)
-      );
-      const friends = friendsSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+        const friendsSnapshot = await getDocs(
+          collection(db, `users/${currentUser.uid}/friends`)
+        );
+        const friends = friendsSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
 
-      const map = {};
-      friends.forEach(f => map[f.id] = f.username);
-      setFriendsMap(map);
+        const map = {};
+        friends.forEach((f) => {
+          map[f.id] = f.username;
+        });
+        setFriendsMap(map);
+        setPostList(posts);
 
-      setFriendsMap(map);
-      setPostList(posts);
-      setLoading(false);
+        if (posts.length === 0 && !retried) {
+          retried = true;
+          retryTimeout = setTimeout(fetchOnce, 400);
+          return;
+        }
+
+        setLoading(false);
+      };
+
+      await fetchOnce();
     });
 
-    return () => unsubscribe();
+    return () => {
+      if (retryTimeout) clearTimeout(retryTimeout);
+      unsubscribe();
+    };
   }, [navigate]);
 
   const handleDelete = async (id) => {
