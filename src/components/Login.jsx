@@ -23,7 +23,7 @@ const Login = ({ setIsAuth }) => {
 
   const defaultPosts = (friendsIds, tagIds) => [
     {
-      title: "スンドゥブの豆腐落としたから洗ったら溶けてなくなった話",
+      title: "スンドゥブの豆腐落として洗ったら溶けてなくなった話",
       postsText: "",
       createdAt: new Date(),
       talkedTo: [
@@ -43,7 +43,7 @@ const Login = ({ setIsAuth }) => {
       tags: [tagIds[2]],
     },
     {
-      title: "妹が修学旅行でいびきがうるさい友達の口にシールを貼ろうとした話",
+      title: "妹が修学旅行でいびきのうるさい友達の口にシールを貼ろうとした話",
       postsText: "",
       createdAt: new Date(),
       talkedTo: [
